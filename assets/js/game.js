@@ -9,30 +9,38 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+        level:1,
+        levelLabel:cc.Label,
+        prevBtn:cc.Node,
+        nextBtn:cc.Node,
+        startBtn:cc.Node
     },
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
-
+    onLoad () {
+        cc.log('onload')
+    },
+    onDestroy () {
+        cc.log('onload')
+    },
     start () {
-
+        this.updatLevel(1);
+        this.addEventHandler();
     },
 
-    // update (dt) {},
+    updatLevel(level){
+        cc.log(level)
+        this.level=level;
+        this.levelLabel.string=level;
+    },
+
+    addEventHandler(){
+        this.nextBtn.on('touchstart',(event)=>{
+            this.updatLevel(++this.level);
+        })
+        this.prevBtn.on('touchstart',(event)=>{
+            this.updatLevel(--this.level);
+        })
+        this.startBtn.on('touchstart',(event)=>{
+            cc.director.loadScene("level1");
+        })
+    }
 });
