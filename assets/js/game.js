@@ -16,7 +16,19 @@ cc.Class({
         startBtn:cc.Node
     },
     onLoad () {
-        cc.log('onload')
+        var jumpAction = this.runJumpAction();
+        cc.tween(this.startBtn).then(jumpAction).start()
+    },
+    runJumpAction () {
+        // 跳跃上升
+        var jumpUp = cc.tween().by(2, {y: 20}, {easing: 'sineOut'});
+        // 下落
+        var jumpDown = cc.tween().by(2, {y: -10}, {easing: 'sineIn'});
+
+        // 创建一个缓动，按 jumpUp、jumpDown 的顺序执行动作
+        var tween = cc.tween().sequence(jumpUp, jumpDown)
+        // 不断重复
+        return cc.tween().repeatForever(tween);
     },
     onDestroy () {
         cc.log('onload')
